@@ -1,7 +1,8 @@
 import { useEffect, useState } from 'react';
 import './App.css'
 import Homepage from './pages/homepage'
-import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import Details from './components/details';
+import { BrowserRouter as Router, Route, Routes, useNavigate, Link } from 'react-router-dom';
 
 interface EstimatedDiameter {
   min_km: number;
@@ -28,10 +29,13 @@ interface Detailjson {
 function App() {
   const [astdet, setastdet] = useState<any[]>([]);
   const API_KEY = "0XDOT0Q9cPCQSjqR3q8gYbxzLyCXa9F7xH56jDsM";
+  // const navigate = useNavigate();
+
   useEffect(() => {fetchData();}, []);
 
   const handleSearch = (text: string) => {
     console.log(text);
+    window.location.href = `/${text}`;
   }
 
   const handleRandom = () => {
@@ -75,6 +79,7 @@ function App() {
             <AsteroidDetails 
               asteroidjson = {products}
             />} /> */}
+        <Route path="/:id" element={<Details />} /> 
       </Routes>
     </Router>
   )
