@@ -4,7 +4,7 @@ import { styled } from '@mui/material/styles';
 import bg from "../assets/background.jpg";
 
 interface SearchProps {
-  onSearch: (id: string) => void;
+  onSearch: (text: string) => void;
   onRandom: () => void;
 }
 
@@ -19,7 +19,7 @@ const Background = styled('div')({
 });
 
 const Homepage: React.FC<SearchProps> = ({ onSearch, onRandom }) => {
-  const [asteroidId, setAsteroidId] = useState('');
+  const [asteroidId, setAsteroidId] = useState<string>('');
 
   const handleSearch = () => {
     onSearch(asteroidId);
