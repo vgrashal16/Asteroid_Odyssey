@@ -2,21 +2,21 @@ import { useEffect, useState } from 'react';
 import './App.css'
 import Homepage from './pages/homepage'
 import Details from './components/details';
-import { BrowserRouter as Router, Route, Routes, useNavigate, Link } from 'react-router-dom';
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 
-interface EstimatedDiameter {
+export interface EstimatedDiameter {
   min_km: number;
   max_km: number;
 }
 
-interface OrbitalData {
+export interface OrbitalData {
   orbit_id: number;
   first_date: string; 
   last_date: string; 
   equinox: string; 
 }
 
-interface Detailjson {
+export interface Detailjson {
   asteroidID: number;
   name: string;
   designation: number;
@@ -35,12 +35,23 @@ function App() {
 
   const handleSearch = (text: string) => {
     console.log(text);
+
+    if (asteroidIDs.includes(text)){
     window.location.href = `/${text}`;
+    }
+
+    else {
+      if(text.length == 0){
+        console.log('empty'); //TOASTIFY
+      }
+      else{console.log('not exist');} //TOASTIFY
+    }
   }
 
   const handleRandom = () => {
     const x: number = Math.floor(Math.random() * 20);
-    console.log(asteroidIDs[x]);
+    // console.log(asteroidIDs[x]);
+    window.location.href = `/${asteroidIDs[x]}`;
   }
 
   const fetchData = async() => {
@@ -75,11 +86,7 @@ function App() {
     <Router>
       <Routes>
         <Route path="/" element = {<Homepage onSearch={handleSearch} onRandom={handleRandom}/>}/>
-        {/* <Route path="/:asteroidID" element={
-            <AsteroidDetails 
-              asteroidjson = {products}
-            />} /> */}
-        <Route path="/:id" element={<Details />} /> 
+        <Route path="/:id" element={<Details detailData={detailjson}/>} /> 
       </Routes>
     </Router>
   )

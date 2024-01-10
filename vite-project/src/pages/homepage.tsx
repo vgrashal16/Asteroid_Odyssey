@@ -8,7 +8,7 @@ interface SearchProps {
   onRandom: () => void;
 }
 
-const Background = styled('div')({
+export const Background = styled('div')({
   backgroundImage: `url(${bg})`,
   backgroundSize: 'cover',
   minHeight: '100vh',
