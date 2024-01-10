@@ -47,7 +47,7 @@ function App() {
       if(text.length == 0){
         toast.error("Enter Asteroid ID")
       }
-      else{toast.error("Asteroid ID is invalid")} //TOASTIFY
+      else{toast.error("Asteroid ID is invalid")} 
     }
   }
 

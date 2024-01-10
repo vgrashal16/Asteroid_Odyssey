@@ -3,8 +3,6 @@ import { Button, TextField, Box } from '@mui/material';
 import { styled } from '@mui/material/styles';
 import bg from "../assets/background.jpg";
 
-
-
 interface SearchProps {
   onSearch: (text: string) => void;
   onRandom: () => void;
