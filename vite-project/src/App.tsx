@@ -3,6 +3,8 @@ import './App.css'
 import Homepage from './pages/homepage'
 import Details from './components/details';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+// import { useNavigate } from 'react-router-dom';
+import toast, { Toaster } from 'react-hot-toast';
 
 export interface EstimatedDiameter {
   min_km: number;
@@ -38,13 +40,14 @@ function App() {
 
     if (asteroidIDs.includes(text)){
     window.location.href = `/${text}`;
+    // navigate(`/${text}`)
     }
 
     else {
       if(text.length == 0){
-        console.log('empty'); //TOASTIFY
+        toast.error("Enter Asteroid ID")
       }
-      else{console.log('not exist');} //TOASTIFY
+      else{toast.error("Asteroid ID is invalid")} //TOASTIFY
     }
   }
 
@@ -84,6 +87,10 @@ function App() {
 
   return (
     <Router>
+      <Toaster
+        position="top-center"
+        reverseOrder={true}
+      />
       <Routes>
         <Route path="/" element = {<Homepage onSearch={handleSearch} onRandom={handleRandom}/>}/>
         <Route path="/:id" element={<Details detailData={detailjson}/>} /> 

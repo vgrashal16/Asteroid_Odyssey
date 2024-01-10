@@ -3,6 +3,8 @@ import { Button, TextField, Box } from '@mui/material';
 import { styled } from '@mui/material/styles';
 import bg from "../assets/background.jpg";
 
+
+
 interface SearchProps {
   onSearch: (text: string) => void;
   onRandom: () => void;
@@ -18,7 +20,7 @@ export const Background = styled('div')({
   alignItems: 'center',
 });
 
-const Homepage: React.FC<SearchProps> = ({ onSearch, onRandom }) => {
+const Homepage: React.FC<SearchProps> = ({ onSearch, onRandom}) => {
   const [asteroidId, setAsteroidId] = useState<string>('');
 
   const handleSearch = () => {
