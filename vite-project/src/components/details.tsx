@@ -15,23 +15,20 @@ export const Background = styled('div')({
 
 interface DetailsProps {
   detailData: Detailjson[];
+  params: { id: number };
 }
 
-interface DetailsState {
-  id: string | undefined;
-}
-
-class Details extends Component<DetailsProps, DetailsState> {
+  
+class Details extends Component<DetailsProps> {
+  // navigate: any;
   constructor(props: DetailsProps) {
     super(props);
-    this.state = {
-      id: undefined,
-    };
   }
 
   handleBack = () => {
     // const { history } = this.props;
     window.location.href = `/`;
+    // this.navigate('/');
   }
 
   render() {
@@ -84,9 +81,6 @@ class Details extends Component<DetailsProps, DetailsState> {
   }
 }
 
-export default (props) => (
-  <Details
-  {...props}
-  params={useParams()}
-/>
+export default (props: any) => (
+  <Details {...props} params={useParams()}/>
 );

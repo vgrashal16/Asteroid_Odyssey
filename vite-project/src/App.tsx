@@ -28,7 +28,7 @@ export interface Detailjson {
 }
 
 interface AppState {
-  astdet: any[]; // Update the type accordingly based on the actual data structure
+  astdet: any[]; 
 }
 
 class App extends Component<{}, AppState> {
@@ -46,12 +46,10 @@ class App extends Component<{}, AppState> {
     this.fetchData();
   }
 
-  handleSearch = (text: string) => {
-    console.log(text);
-
-
+  handleSearch = (text: any) => {
+    // console.log(text);
     if (this.asteroidIDs.includes(text)) {
-      window.location.href = `/${text}`;
+      window.location.href = `${text}`;
     } else {
       if (text.length === 0) {
         toast.error("Enter Asteroid ID");
@@ -63,7 +61,7 @@ class App extends Component<{}, AppState> {
 
   handleRandom = () => {
     const x = Math.floor(Math.random() * 20);
-    window.location.href = `/${this.asteroidIDs[x]}`;
+    window.location.href = `${this.asteroidIDs[x]}`;
   }
 
   fetchData = async () => {
