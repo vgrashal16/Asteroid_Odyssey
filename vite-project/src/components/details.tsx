@@ -1,8 +1,8 @@
 import { Component } from 'react';
 import { styled } from '@mui/material/styles';
-import { useParams } from 'react-router-dom';
 import { Button, Box } from '@mui/material';
-import { Detailjson } from '../App';
+import toast, { Toaster } from 'react-hot-toast';
+import withRouter from '../withRouter';
 
 export const Background = styled('div')({
   backgroundColor: '#11111b',
@@ -13,33 +13,73 @@ export const Background = styled('div')({
   alignItems: 'center',
 });
 
-interface DetailsProps {
-  detailData: Detailjson;
-  // params: { id: number };
+export interface EstimatedDiameter {
+  min_km: number;
+  max_km: number;
+}
+
+export interface OrbitalData {
+  orbit_id: number;
+  first_date: string;
+  last_date: string;
+  equinox: string;
+}
+
+interface AsteroidData {
+  id: number;
+  name: string;
+  designation: string;
+  estimated_diameter?: EstimatedDiameter;
+  is_potentially_hazardous_asteroid: boolean;
+  orbital_data?: OrbitalData;
+  is_sentry_object: boolean;
 }
 
   
-class Details extends Component<DetailsProps> {
-  // navigate: any;
-  constructor(props: DetailsProps) {
+class Details extends Component<{location: any;}, AsteroidData> {
+
+  constructor(props: any) {
     super(props);
+    this.state = {
+      asteroid: null,
+    };
   }
+
   handleBack = () => {
     // const { history } = this.props;
     window.location.href = `/`;
     // this.navigate('/');
   }
 
+  componentDidMount() {
+    const { location } = this.props;
+    const asteroidData: AsteroidData = location.state;
+    const asteroid: AsteroidData = asteroidData;
+    this.setState({ asteroid: asteroid });
+  }
+  
   render() {
+    const { asteroid } = this.state;
+
+    if (!asteroid) {
+      // You might want to show a loading state or handle this case differently
+      
+      console.log("loading");
+      return null;
+    }
+
+    console.log(asteroid);
     // const { id } = this.props.params;
     // const index = this.props.detailData.findIndex((item) => item.asteroidID === id);
     // const index = 4;
     // console.log(this.props.detailData.findIndex((item) => item.asteroidID === id));
     // if (index !== -1) {
-      const asteroid = this.props.detailData;
-      console.log(this.props.detailData);
+
+      // const asteroid = this.props.detailData;
+      // console.log(this.props.detailData);
       return (
         <div>
+          <Toaster position="top-center" reverseOrder={false}/>
           <Background>
             <Box display="flex"
               flexDirection="column"
@@ -58,15 +98,15 @@ class Details extends Component<DetailsProps> {
 
               <Box sx={{ height: '60%', display: 'flex' }}>
                 <Box sx={{ width: '50%', display: 'flex', justifyContent: 'center', alignItems: 'center', flexDirection: 'column', fontSize: '2em' }}>
-                  <p>ID: {asteroid.asteroidID}</p>
+                  <p>ID: {asteroid.id}</p>
                   <p>Designation: {asteroid.designation}</p>
-                  <p>Equinox: {asteroid.orbitdata.equinox}</p>
-                  <p>Orbit ID: {asteroid.orbitdata.orbit_id}</p>
-                  <p>Estimated Diameter: {asteroid.estimateddia?.min_km.toFixed(3)} km - {asteroid.estimateddia?.max_km.toFixed(3)} km</p>
+                  <p>Equinox: {asteroid.orbital_data.equinox}</p>
+                  <p>Orbit ID: {asteroid.orbital_data.orbit_id}</p>
+                  <p>Estimated Diameter: {asteroid.estimated_diameter.kilometers.estimated_diameter_min.toFixed(3)} km - {asteroid.estimated_diameter.kilometers.estimated_diameter_max?.toFixed(3)} km</p>
                 </Box>
                 <Box sx={{ width: '50%', display: 'flex', justifyContent: 'center', alignItems: 'center', flexDirection: 'column', fontSize: '2em' }}>
-                  <p>First Observation Date: {asteroid.orbitdata.first_date}</p>
-                  <p>Last Observation Date: {asteroid.orbitdata.last_date}</p>
+                  <p>First Observation Date: {asteroid.orbital_data.first_observation_date}</p>
+                  <p>Last Observation Date: {asteroid.orbital_data.last_observation_date}</p>
                   <p>Hazardous: {asteroid.hazardous ? 'Yes' : 'No'}</p>
                   <p>Sentry Object: {asteroid.sentryobject ? 'Yes' : 'No'}</p>
                 </Box>
@@ -75,12 +115,8 @@ class Details extends Component<DetailsProps> {
           </Background>
         </div>
       );
-    // } else {
-    //   return <div>ID {id} does not exist</div>;
     }
   }
 
 
-export default (props: any) => (
-  <Details {...props} params={useParams()}/>
-);
+export default withRouter(Details);
