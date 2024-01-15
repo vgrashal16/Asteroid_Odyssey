@@ -29,7 +29,7 @@ class Homepage extends Component<HomepageProps, HomepageState> {
       asteroidId: '',
     };
   }
-
+  
   handleSearch = () => {
     this.props.onSearch(this.state.asteroidId);
   };
@@ -39,10 +39,14 @@ class Homepage extends Component<HomepageProps, HomepageState> {
   };
 
   handleChange = (e: ChangeEvent<HTMLInputElement>) => {
-    this.setState({ asteroidId: e.target.value });
+    const newValue = e.target.value;
+    if (/^[0-9]*$/.test(newValue)) {
+      this.setState({ asteroidId: e.target.value });
+    }
   };
 
   render() {
+    const isSearchDisabled = this.state.asteroidId.length !== 7;
     return (
       <Background>
         <Box sx={{ display: 'flex', marginBottom: '460px', flexDirection: 'column', alignItems: 'center' }}>
@@ -62,10 +66,11 @@ class Homepage extends Component<HomepageProps, HomepageState> {
               variant="outlined"
               value={this.state.asteroidId}
               onChange={this.handleChange}
-              InputLabelProps={{
-                style: { color: 'aliceblue' },
-              }}
               inputProps={{
+                style: { color: 'aliceblue' },
+                maxLength: 7 
+              }}
+              InputLabelProps={{
                 style: { color: 'aliceblue' },
               }}
               sx={{
@@ -87,7 +92,11 @@ class Homepage extends Component<HomepageProps, HomepageState> {
               variant="contained"
               color="primary"
               onClick={this.handleSearch}
-              sx={{ color: 'aliceblue' }}
+              style={{
+                color: 'aliceblue',
+                backgroundColor: isSearchDisabled ? 'grey' : '#1976D2',
+              }}
+              disabled={isSearchDisabled}
             >
               Search
             </Button>
@@ -96,9 +105,9 @@ class Homepage extends Component<HomepageProps, HomepageState> {
             variant="contained"
             color="secondary"
             onClick={this.handleRandom}
-            sx={{ color: 'aliceblue', width: '35%' }}
+            sx={{ color: 'aliceblue', width: '20%' }}
           >
-            Random Asteroid
+            Surprise 
           </Button>
         </Box>
       </Background>

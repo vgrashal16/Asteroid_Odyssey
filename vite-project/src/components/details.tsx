@@ -14,8 +14,8 @@ export const Background = styled('div')({
 });
 
 interface DetailsProps {
-  detailData: Detailjson[];
-  params: { id: number };
+  detailData: Detailjson;
+  // params: { id: number };
 }
 
   
@@ -24,7 +24,6 @@ class Details extends Component<DetailsProps> {
   constructor(props: DetailsProps) {
     super(props);
   }
-
   handleBack = () => {
     // const { history } = this.props;
     window.location.href = `/`;
@@ -32,12 +31,13 @@ class Details extends Component<DetailsProps> {
   }
 
   render() {
-    const { id } = this.props.params;
-    const index = this.props.detailData.findIndex((item) => item.asteroidID === id);
-
-    if (index !== -1) {
-      const asteroid = this.props.detailData[index];
-
+    // const { id } = this.props.params;
+    // const index = this.props.detailData.findIndex((item) => item.asteroidID === id);
+    // const index = 4;
+    // console.log(this.props.detailData.findIndex((item) => item.asteroidID === id));
+    // if (index !== -1) {
+      const asteroid = this.props.detailData;
+      console.log(this.props.detailData);
       return (
         <div>
           <Background>
@@ -62,7 +62,7 @@ class Details extends Component<DetailsProps> {
                   <p>Designation: {asteroid.designation}</p>
                   <p>Equinox: {asteroid.orbitdata.equinox}</p>
                   <p>Orbit ID: {asteroid.orbitdata.orbit_id}</p>
-                  <p>Estimated Diameter: {asteroid.estimateddia.min_km.toFixed(3)} km - {asteroid.estimateddia.max_km.toFixed(3)} km</p>
+                  <p>Estimated Diameter: {asteroid.estimateddia?.min_km.toFixed(3)} km - {asteroid.estimateddia?.max_km.toFixed(3)} km</p>
                 </Box>
                 <Box sx={{ width: '50%', display: 'flex', justifyContent: 'center', alignItems: 'center', flexDirection: 'column', fontSize: '2em' }}>
                   <p>First Observation Date: {asteroid.orbitdata.first_date}</p>
@@ -75,11 +75,11 @@ class Details extends Component<DetailsProps> {
           </Background>
         </div>
       );
-    } else {
-      return <div>ID {id} does not exist</div>;
+    // } else {
+    //   return <div>ID {id} does not exist</div>;
     }
   }
-}
+
 
 export default (props: any) => (
   <Details {...props} params={useParams()}/>
