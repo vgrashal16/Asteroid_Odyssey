@@ -1,7 +1,7 @@
 import { Component } from 'react';
 import { styled } from '@mui/material/styles';
 import { Button, Box } from '@mui/material';
-import toast, { Toaster } from 'react-hot-toast';
+import { Toaster } from 'react-hot-toast';
 import withRouter from '../withRouter';
 
 export const Background = styled('div')({
@@ -35,10 +35,13 @@ interface AsteroidData {
   is_sentry_object: boolean;
 }
 
+interface Appstate{
+  asteroid : any;
+}
   
-class Details extends Component<{location: any;}, AsteroidData> {
+class Details extends Component<{location: any;}, Appstate> {
 
-  constructor(props: any) {
+  constructor(props: { location: any }) {
     super(props);
     this.state = {
       asteroid: null,
@@ -102,13 +105,13 @@ class Details extends Component<{location: any;}, AsteroidData> {
                   <p>Designation: {asteroid.designation}</p>
                   <p>Equinox: {asteroid.orbital_data.equinox}</p>
                   <p>Orbit ID: {asteroid.orbital_data.orbit_id}</p>
-                  <p>Estimated Diameter: {asteroid.estimated_diameter.kilometers.estimated_diameter_min.toFixed(3)} km - {asteroid.estimated_diameter.kilometers.estimated_diameter_max?.toFixed(3)} km</p>
+                  <p>Estimated Diameter: {asteroid.estimated_diameter?.kilometers?.estimated_diameter_min.toFixed(3)} km - {asteroid.estimated_diameter?.kilometers?.estimated_diameter_max?.toFixed(3)} km</p>
                 </Box>
                 <Box sx={{ width: '50%', display: 'flex', justifyContent: 'center', alignItems: 'center', flexDirection: 'column', fontSize: '2em' }}>
                   <p>First Observation Date: {asteroid.orbital_data.first_observation_date}</p>
                   <p>Last Observation Date: {asteroid.orbital_data.last_observation_date}</p>
-                  <p>Hazardous: {asteroid.hazardous ? 'Yes' : 'No'}</p>
-                  <p>Sentry Object: {asteroid.sentryobject ? 'Yes' : 'No'}</p>
+                  <p>Hazardous: {asteroid.is_potentially_hazardous_asteroid ? 'Yes' : 'No'}</p>
+                  <p>Sentry Object: {asteroid.is_sentry_object ? 'Yes' : 'No'}</p>
                 </Box>
               </Box>
             </Box>

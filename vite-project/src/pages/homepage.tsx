@@ -55,13 +55,16 @@ class Homepage extends Component<{ navigate: (str: string, any: any) => void}, H
     };
   }
 
+  
   fetchWhole = async() => {
     const res = await fetch(`https://api.nasa.gov/neo/rest/v1/neo/browse?api_key=` + this.API_KEY);
     const data = await res.json();
+    // console.log(data);
     const randomID: number[] = [];
     data.near_earth_objects.map((item: any) => {
       randomID.push(item.id);
     });
+    console.log(randomID);
     const random = randomID[Math.floor(Math.random() * randomID.length)];
     this.fetchData(random.toString());
   }

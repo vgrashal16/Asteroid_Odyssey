@@ -14,7 +14,6 @@ class App extends Component<{} > {
           <Route path="/:id" element={<Details/>} />
         </Routes>
       </Router>
-  
     );
   }
 }

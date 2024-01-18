@@ -1,7 +1,0 @@
-{
-  "dependencies": {
-    "react-hot-toast": "^2.4.1",
-    "react-router": "^5.2.0",
-    "react-router-dom": "^5.2.0"
-  }
-}
